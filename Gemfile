@@ -1,11 +1,41 @@
 source 'https://rubygems.org'
 
+# Rails itself
 gem 'rails', '3.2.13'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+# Our HTTP server
+gem 'unicorn'
 
-gem 'sqlite3'
+# Dropbox api
+gem 'dropbox-sdk'
+
+# User encryption
+gem 'devise'
+
+# Make rails console db request more legible
+gem 'hirb'
+
+# File uploading to S3
+gem 'carrierwave'
+
+# File processing, resizing etc.
+gem 'mini_magick'
+
+# jQuery for Rails
+gem 'jquery-rails'
+
+# For sorting portfolio images
+gem 'acts_as_list'
+
+group :development, :test do
+  gem 'better_errors'
+  gem 'sqlite3'
+end
+
+group :production do
+  gem 'pg'
+  gem 'fog'
+end
 
 
 # Gems used only for assets and not required
@@ -20,19 +50,3 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'
