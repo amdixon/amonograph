@@ -1,1 +1,7 @@
 <h2>Homey</h2>
+
+<% if user_signed_in? %>
+	@user.name
+<% else %>
+	nothing
+<% end %>

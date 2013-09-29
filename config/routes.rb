@@ -12,6 +12,11 @@ Amonograph::Application.routes.draw do
 
   # Sign up redirect
   get "signup/new" => "signup#new"
+  
+  # Resources
+  resources :pages do
+    collection { post :sort }
+  end
 
 
   # User portfolio
