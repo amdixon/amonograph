@@ -20,7 +20,9 @@ class SignupController < Devise::RegistrationsController
 
   # POST /resource
   def create
-    build_resource(sign_up_params)
+    access_token = session[:access_token]
+    params = sign_up_params.merge(:access_token => access_token)
+    build_resource(params)
 
     if resource.save
       if resource.active_for_authentication?
