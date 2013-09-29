@@ -1,5 +1,18 @@
 Amonograph::Application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "signup" }
+
+  # Root page
+  root :to => 'home#index'
+
+  # Dropbox API routes
+  get  "dropbox" => "dropbox#index"
+  post "dropbox/upload"
+  get  "dropbox/auth_start"
+  get  "dropbox/auth_finish"
+
+  # Sign up redirect
+  get "signup/new" => "signup#new"
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -48,13 +61,4 @@ Amonograph::Application.routes.draw do
   #     resources :products
   #   end
 
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  # root :to => 'welcome#index'
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
 end
