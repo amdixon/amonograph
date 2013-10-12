@@ -1,24 +1,40 @@
 <%= @user.name %><br>
 
-<% @images.each do |i| %>
-  <img src="<%= i['url'] %>"><br>
-<% end %>
+<button id="next">NEXT</button><br>
 
-
-<button id="next">NEXT</button>
+<div id="carousel">
+  <div class="viewport">
+    <ul id="portfolio">
+      <% @images.each do |i| %>
+        <li>
+          <img src="<%=i['url']%>">
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
 
 <script>
-var p = new Page(4);
+// var images = []
 
-var $next = $('#next');
+// <% @images.each do |i| %>
+//   var url = "<%= i['url'].to_s %>";
+//   images.push( url );
+// <% end %>
 
-$next.click( function () {
-  p.nextPage();
-  console.log(p.currentPage());
-});
+// num_of_pages = images.length
 
-console.log( p.currentPage() );
+// var p = Portfolio(num_of_pages, images);
 
+// var addImage = function (url) {
+//   var img = $('<img>').attr('src', url);
+//   var li = $('<li />').append(img)
+//   $('#portfolio').prepend(li);
+// }
+
+
+
+// addImage(p.currentPage());
 
 </script>
 

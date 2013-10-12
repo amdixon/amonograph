@@ -15,18 +15,17 @@ class UserController < ApplicationController
     client = DropboxClient.new(lookup)
     data = client.metadata('/')
 
+    # Look up how many pages
     @pages = []
-
     data['contents'].each do |d|
      @pages << d['path']
     end
 
+    # Get all the dropbox image urls
     @images = []
-
     @pages.each do |p|
       @images << client.media(p)
     end
-
   end
 
 
