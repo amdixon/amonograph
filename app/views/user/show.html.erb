@@ -1,6 +1,24 @@
+<%= @user.name %><br>
 
-
-<% @pages.each do |d| %>
-  <%= d %><br>
+<% @images.each do |i| %>
+  <img src="<%= i['url'] %>"><br>
 <% end %>
+
+
+<button id="next">NEXT</button>
+
+<script>
+var p = new Page(4);
+
+var $next = $('#next');
+
+$next.click( function () {
+  p.nextPage();
+  console.log(p.currentPage());
+});
+
+console.log( p.currentPage() );
+
+
+</script>
 
