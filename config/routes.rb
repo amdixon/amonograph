@@ -20,6 +20,9 @@ Amonograph::Application.routes.draw do
   
   resources :portfolios
 
+  # User portfolio
+  get '/:name' => "user#show", :as => :user, :constraints => {format: 'html'}
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
