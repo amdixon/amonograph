@@ -17,7 +17,8 @@ Amonograph::Application.routes.draw do
   resources :pages do
     collection { post :sort }
   end
-
+  
+  resources :portfolios
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,7 +1,11 @@
 <h2>Homey</h2>
 
 <% if user_signed_in? %>
-	@user.name
+
+<%= @user.name %>
+
 <% else %>
-	nothing
+
+<h1>sign in bitch!</h1>
+
 <% end %>
