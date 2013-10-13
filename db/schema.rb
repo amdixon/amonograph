@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130929004240) do
+ActiveRecord::Schema.define(:version => 20131012213846) do
 
   create_table "pages", :force => true do |t|
     t.string   "file"
@@ -19,8 +19,13 @@ ActiveRecord::Schema.define(:version => 20130929004240) do
     t.text     "content"
     t.integer  "position"
     t.integer  "portfolio_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.boolean  "splash",        :default => false
+    t.integer  "web_width"
+    t.integer  "web_height"
+    t.integer  "mobile_width"
+    t.integer  "mobile_height"
   end
 
   create_table "portfolios", :force => true do |t|

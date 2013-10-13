@@ -1,10 +1,3 @@
-require 'dropbox_sdk'
-require 'securerandom'
-
-APP_KEY = "3qkf9rrz8s2wyxk"
-APP_SECRET = "aq0dm6aq63fvp4q"
-
-
 class SignupController < Devise::RegistrationsController
   prepend_before_filter :require_no_authentication, :only => [ :new, :create ]
 

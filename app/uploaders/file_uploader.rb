@@ -1,6 +1,8 @@
 # encoding: utf-8
 
 class FileUploader < CarrierWave::Uploader::Base
+  
+  include CarrierWave::MiniMagick
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
@@ -16,7 +18,37 @@ class FileUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    "users/uploads/#{model.class.to_s}/#{mounted_as}/#{model.id}"
+  end
+  
+  version :web do
+    resize_to_fit(1400, 800)
+    process :get_geometry
+    
+    def geometry
+      @geometry ||= get_geometry
+    end
+  end
+  
+  version :mobile, :from_version => :web do
+    resize_to_fit(640,960)
+    process :get_geometry
+    
+    def geometry
+      @geometry ||= get_geometry
+    end
+  end
+  
+  version :thumb, :from_version => :mobile do
+    resize_to_fill(400, 200)
+  end
+
+  def get_geometry
+    if (@file)
+      raise @file.to_yaml
+      image = MiniMagick::Image.read(@file.file).first
+      geometry = { width: image.columns, height: image.rows }
+    end
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

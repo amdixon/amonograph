@@ -1,9 +1,3 @@
-require 'dropbox_sdk'
-require 'securerandom'
-
-APP_KEY = "3qkf9rrz8s2wyxk"
-APP_SECRET = "aq0dm6aq63fvp4q"
-
 class DropboxController < ApplicationController
   def index
     client = get_dropbox_client
@@ -51,6 +45,7 @@ class DropboxController < ApplicationController
     end
   end
 
+
   def get_web_auth()
       redirect_uri = url_for(:action => 'auth_finish')
       DropboxOAuth2Flow.new(APP_KEY, APP_SECRET, redirect_uri, session, :dropbox_auth_csrf_token)
@@ -68,7 +63,19 @@ class DropboxController < ApplicationController
       begin
           access_token, user_id, url_state = get_web_auth.finish(params)
           session[:access_token] = access_token
+          
+          # redirect_to request_token.authorize_url(:oauth_callback => "http://#{request.host_with_port}/dropbox/callback")
+          
+          @@client = get_dropbox_client
+          data = @@client.metadata('/')
+          @pages = []
+          data['contents'].each do |d|
+            @pages << d['path']
+            download_and_create(@pages)
+          end
+          
           redirect_to :controller => 'signup', :action => 'new'
+          
       rescue DropboxOAuth2Flow::BadRequestError => e
           render :text => "Error in OAuth 2 flow: Bad request: #{e}"
       rescue DropboxOAuth2Flow::BadStateError => e
@@ -87,5 +94,34 @@ class DropboxController < ApplicationController
           render :text => "Error communicating with Dropbox servers."
       end
   end
+  
+  private
+  
+  def download_and_create(obj)
+    if obj.any?
+      obj.each do |f|
+        path = download_file_from_url(f)
+        dp_file = File.open(path) if File.exists?(path)
+        if dp_file
+          Page.create(:file => dp_file)
+          File.delete(dp_file)
+        end
+      end
+    end
+  end
+  
+  def download_file_from_url(f)
+    real_path = @@client.media(f)['url'].to_s
+    destination_file_full_path = Rails.root.to_s + f.to_s
+    begin
+      open(destination_file_full_path, 'wb') do |file|
+      file << open(real_path).read
+    end
+    rescue
+      puts "Exception occured while downloading..."
+    end
+    destination_file_full_path
+  end
+ 
 
 end
