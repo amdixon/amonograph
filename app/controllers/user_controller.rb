@@ -4,17 +4,22 @@ class UserController < ApplicationController
   end
 
   def show
-    user = User.find_by_name(params[:name]) || not_found
-    lookup = user.access_token
+    @user = User.find_by_name(params[:name]) || not_found
+    lookup = @user.access_token
     client = DropboxClient.new(lookup)
     data = client.metadata('/')
 
+    # Look up how many pages
     @pages = []
-
     data['contents'].each do |d|
-      @pages << d['path']
+     @pages << d['path']
     end
 
+    # Get all the dropbox image urls
+    @images = []
+    @pages.each do |p|
+      @images << client.media(p)
+    end
   end
 
 

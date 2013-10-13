@@ -9,22 +9,6 @@ class DropboxController < ApplicationController
 
     render :inline =>
     "#{account_info['email']}"
-
-
-    # info = client.metadata("/", file_limit=100, list=true)['contents']
-
-    # @imageArr ||= []
-
-    # (0..info.length-1).each do |i|
-    #   image = info[i]['path']
-    #   yessir = client.media(image)['url']
-
-    #   @imageArr << yessir
-    # end
-
-    # respond_to do |format|
-    #   format.html { render :html => info }
-    # end
   end
 
   def show
