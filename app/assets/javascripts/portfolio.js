@@ -39,21 +39,24 @@ $(window).load( function () {
 
 
   var slideTo = function (dir){
-    if ( dir == -1 ){
-      var index = $('.active').prev();
-    } else{
-      var index = $('.active').next();
+    var index;
+    if ($('.active').is(':last-child')){
+      index = item[0];
+    } else {
+      index = $('.active').next();
     }
+    console.log(index);
     itemClicked( index );
   };
 
 
   var itemClicked = function (index) {
-    $(item).siblings().removeClass( 'active' );
-    $(item).addClass( 'active' );
+    $(index).siblings().removeClass( 'active' );
+    $(index).addClass( 'active' );
 
-    var position = $(item).position().left;
-    newLeft = $(viewport).width() - position - $(item).width();
+    var position = $(index).position().left;
+    newLeft = $(viewport).width() - position - $(index).width();
+    console.log(newLeft);
     setCarouselLeft( newLeft );
   }
 
